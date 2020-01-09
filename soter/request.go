@@ -113,7 +113,6 @@ func (e *Error) Error() string {
 func (r *Request) Send(c *http.Client) (*Response, error) {
 	url := r.getURL()
 	req, err := http.NewRequest(r.Method, url, r.Body)
-	fmt.Println("url:", url)
 	if err != nil {
 		return nil, err
 	}
