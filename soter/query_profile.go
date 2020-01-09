@@ -19,7 +19,7 @@ func getProfileRawData(userAddress string) (string, error) {
 	return utils.GetStructRawString(reqRaw)
 }
 
-func (s *Shell) QueryProfile(ctx context.Context) (SoterResponse, error) {
+func (s *Shell) QueryProfile() (SoterResponse, error) {
 	rawData, err := getProfileRawData(s.userAddress)
 	if err != nil {
 		return SoterResponse{}, err
@@ -40,6 +40,6 @@ func (s *Shell) QueryProfile(ctx context.Context) (SoterResponse, error) {
 		option(rb)
 	}
 	rb.SetMethod("GET")
-	err = rb.Exec(ctx, &out)
+	err = rb.Exec(context.Background(), &out)
 	return out, err
 }

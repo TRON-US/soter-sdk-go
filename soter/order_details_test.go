@@ -1,7 +1,6 @@
 package soter
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -15,7 +14,7 @@ func TestShell_QueryOrderDetails(t *testing.T) {
 	sh := NewShell(privateKey, userAddress, url)
 
 	requestId := "56af5954-67eb-46a0-92ef-fb421a643dba"
-	out, err := sh.QueryOrderDetails(context.Background(), requestId)
+	out, err := sh.QueryOrderDetails(requestId)
 	if err != nil {
 		t.Fatal(err)
 	}

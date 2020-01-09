@@ -1,7 +1,6 @@
 package soter
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -14,7 +13,7 @@ func TestShell_Balance(t *testing.T) {
 
 	sh := NewShell(privateKey, userAddress, url)
 
-	out, err := sh.Balance(context.Background())
+	out, err := sh.Balance()
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -38,7 +38,7 @@ func getAutopayPayload(enable bool, userAddress, privateKey string) (string, err
 	return utils.GetStructRawString(payload)
 }
 
-func (s *Shell) Autopay(ctx context.Context, enable bool) (SoterResponse, error) {
+func (s *Shell) Autopay(enable bool) (SoterResponse, error) {
 	payload, err := getAutopayPayload(enable, s.userAddress, s.privateKey)
 	if err != nil {
 		return SoterResponse{}, err
@@ -48,6 +48,6 @@ func (s *Shell) Autopay(ctx context.Context, enable bool) (SoterResponse, error)
 	rb = rb.BodyString(payload)
 	rb = rb.Header("Content-Type", "application/json")
 	rb.SetMethod("POST")
-	err = rb.Exec(ctx, &out)
+	err = rb.Exec(context.Background(), &out)
 	return out, err
 }

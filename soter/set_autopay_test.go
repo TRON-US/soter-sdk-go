@@ -1,7 +1,6 @@
 package soter
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -14,7 +13,7 @@ func TestShell_Autopay(t *testing.T) {
 
 	sh := NewShell(privateKey, userAddress, url)
 
-	out, err := sh.Autopay(context.Background(), true)
+	out, err := sh.Autopay(true)
 	if err != nil {
 		t.Fatal(err)
 	}

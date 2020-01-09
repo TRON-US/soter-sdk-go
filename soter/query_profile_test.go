@@ -1,7 +1,6 @@
 package soter
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -14,7 +13,7 @@ func TestShell_QueryProfile(t *testing.T) {
 
 	sh := NewShell(privateKey, userAddress, url)
 
-	out, err := sh.QueryProfile(context.Background())
+	out, err := sh.QueryProfile()
 	if err != nil {
 		t.Fatal(err)
 	}

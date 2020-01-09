@@ -26,7 +26,7 @@ func getFileListRawData(start, end int64, offset, limit int32, deleted bool) (st
 	return utils.GetStructRawString(rawData)
 }
 
-func (s *Shell) QueryFileList(ctx context.Context, start, end int64, offset, limit int32, deleted bool) (SoterResponse, error) {
+func (s *Shell) QueryFileList(start, end int64, offset, limit int32, deleted bool) (SoterResponse, error) {
 	rawData, err := getFileListRawData(start, end, offset, limit, deleted)
 	if err != nil {
 		return SoterResponse{}, err
@@ -47,6 +47,6 @@ func (s *Shell) QueryFileList(ctx context.Context, start, end int64, offset, lim
 		option(rb)
 	}
 	rb.SetMethod("GET")
-	err = rb.Exec(ctx, &out)
+	err = rb.Exec(context.Background(), &out)
 	return out, err
 }

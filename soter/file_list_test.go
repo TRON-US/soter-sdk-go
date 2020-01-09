@@ -1,7 +1,6 @@
 package soter
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -20,7 +19,7 @@ func TestShell_QueryFileList(t *testing.T) {
 	limit := 100
 	isDelete := false
 
-	out, err := sh.QueryFileList(context.Background(), int64(start), int64(end), int32(offset), int32(limit), isDelete)
+	out, err := sh.QueryFileList(int64(start), int64(end), int32(offset), int32(limit), isDelete)
 	if err != nil {
 		t.Fatal(err)
 	}

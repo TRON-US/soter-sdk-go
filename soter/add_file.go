@@ -19,7 +19,7 @@ type AddFileRawData struct {
 	Timestamp int64 `json:"timestamp"`
 }
 
-func (s *Shell) AddFile(ctx context.Context, requestUser, signedUser, privateKey, filePath string) (SoterResponse, error) {
+func (s *Shell) AddFile(requestUser, signedUser, privateKey, filePath string) (SoterResponse, error) {
 	var out SoterResponse
 	rb := s.Request("add")
 	rb.SetMethod("POST")

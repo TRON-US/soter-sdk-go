@@ -18,7 +18,7 @@ func getOrderDetailsRawData(reqId string) (string, error) {
 	return utils.GetStructRawString(rawData)
 }
 
-func (s *Shell) QueryOrderDetails(ctx context.Context, requestId string) (SoterResponse, error) {
+func (s *Shell) QueryOrderDetails(requestId string) (SoterResponse, error) {
 	rawData, err := getOrderDetailsRawData(requestId)
 	if err != nil {
 		return SoterResponse{}, err
@@ -39,6 +39,6 @@ func (s *Shell) QueryOrderDetails(ctx context.Context, requestId string) (SoterR
 		option(rb)
 	}
 	rb.SetMethod("GET")
-	err = rb.Exec(ctx, &out)
+	err = rb.Exec(context.Background(), &out)
 	return out, err
 }
