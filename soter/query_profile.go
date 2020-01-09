@@ -11,19 +11,16 @@ type profileRawData struct {
 	Timestamp   int64  `json:"timestamp"`
 }
 
-func GetProfileRawData(userAddress string) (string, error) {
+func getProfileRawData(userAddress string) (string, error) {
 	reqRaw := profileRawData{
 		UserAddress: userAddress,
 		Timestamp:   utils.GetUnixTimeNow(),
 	}
-
 	return utils.GetStructRawString(reqRaw)
 }
 
 func (s *Shell) QueryProfile(ctx context.Context) (SoterResponse, error) {
-	var out SoterResponse
-	rb := s.Request("get_profile")
-	rawData, err := GetProfileRawData(s.userAddress)
+	rawData, err := getProfileRawData(s.userAddress)
 	if err != nil {
 		return SoterResponse{}, err
 	}
@@ -31,12 +28,14 @@ func (s *Shell) QueryProfile(ctx context.Context) (SoterResponse, error) {
 	if err != nil {
 		return SoterResponse{}, err
 	}
-
 	options := []SoterOpts{
 		UserAddressOpts(s.userAddress),
 		RawDataOpts(rawData),
 		SignatureOpts(signature),
 	}
+
+	var out SoterResponse
+	rb := s.Request("get_profile")
 	for _, option := range options {
 		option(rb)
 	}

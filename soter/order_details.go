@@ -5,22 +5,21 @@ import (
 	"github.com/TRON-US/soter-sdk-golang/utils"
 )
 
-type balanceRawData struct {
-	UserAddress string `json:"user_address"`
-	Timestamp   int64  `json:"timestamp"`
+type orderDetailsRawData struct {
+	RequestId string `json:"request_id"`
+	Timestamp int64  `json:"timestamp"`
 }
 
-func getBalanceRawData(userAddress string) (string, error) {
-	reqRaw := balanceRawData{
-		UserAddress: userAddress,
-		Timestamp:   utils.GetUnixTimeNow(),
+func getOrderDetailsRawData(reqId string) (string, error) {
+	rawData := orderDetailsRawData{
+		RequestId: reqId,
+		Timestamp: utils.GetUnixTimeNow(),
 	}
-
-	return utils.GetStructRawString(reqRaw)
+	return utils.GetStructRawString(rawData)
 }
 
-func (s *Shell) Balance(ctx context.Context) (SoterResponse, error) {
-	rawData, err := getBalanceRawData(s.userAddress)
+func (s *Shell) QueryOrderDetails(ctx context.Context, requestId string) (SoterResponse, error) {
+	rawData, err := getOrderDetailsRawData(requestId)
 	if err != nil {
 		return SoterResponse{}, err
 	}
@@ -33,13 +32,14 @@ func (s *Shell) Balance(ctx context.Context) (SoterResponse, error) {
 		RawDataOpts(rawData),
 		SignatureOpts(signature),
 	}
-	
+
 	var out SoterResponse
-	rb := s.Request("balance")
+	rb := s.Request("order_details")
 	for _, option := range options {
 		option(rb)
 	}
 	rb.SetMethod("GET")
 	err = rb.Exec(ctx, &out)
 	return out, err
+
 }
