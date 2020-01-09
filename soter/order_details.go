@@ -41,5 +41,4 @@ func (s *Shell) QueryOrderDetails(ctx context.Context, requestId string) (SoterR
 	rb.SetMethod("GET")
 	err = rb.Exec(ctx, &out)
 	return out, err
-
 }
