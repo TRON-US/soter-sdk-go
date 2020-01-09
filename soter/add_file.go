@@ -3,10 +3,11 @@ package soter
 import (
 	"bytes"
 	"context"
-	"github.com/TRON-US/soter-sdk-golang/utils"
 	"io"
 	"mime/multipart"
 	"os"
+
+	"github.com/TRON-US/soter-sdk-golang/utils"
 
 	"github.com/satori/go.uuid"
 )

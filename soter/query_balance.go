@@ -2,7 +2,7 @@ package soter
 
 import (
 	"context"
-	"encoding/json"
+
 	"github.com/TRON-US/soter-sdk-golang/utils"
 )
 
@@ -17,11 +17,7 @@ func GetBalanceRawData(userAddress string) (string, error) {
 		Timestamp:   utils.GetUnixTimeNow(),
 	}
 
-	rawBytes, err := json.Marshal(reqRaw)
-	if err != nil {
-		return "", nil
-	}
-	return string(rawBytes), nil
+	return utils.GetStructRawString(reqRaw)
 }
 
 func (s *Shell) Balance(ctx context.Context, options ...SoterOpts) (SoterResponse, error) {

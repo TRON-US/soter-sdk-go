@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
+
 	"github.com/TRON-US/soter-sdk-golang/soter"
 	"github.com/TRON-US/soter-sdk-golang/utils"
 )
 
 func main() {
-	TestSetAutopay()
-	//TestBalance()
+	//TestSetAutopay()
+	TestBalance()
 	//TestAddFile()
 }
 
