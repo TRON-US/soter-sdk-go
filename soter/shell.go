@@ -12,11 +12,13 @@ import (
 )
 
 type Shell struct {
-	url     string
-	httpcli gohttp.Client
+	privateKey  string
+	userAddress string
+	url         string
+	httpcli     gohttp.Client
 }
 
-func NewShell(url string) *Shell {
+func NewShell(privateKey, userAddress, url string) *Shell {
 	c := &gohttp.Client{
 		Transport: &gohttp.Transport{
 			Proxy:             gohttp.ProxyFromEnvironment,
@@ -24,17 +26,19 @@ func NewShell(url string) *Shell {
 		},
 	}
 
-	return NewShellWithClient(url, c)
+	return NewShellWithClient(privateKey, userAddress, url, c)
 }
 
-func NewShellWithClient(url string, c *gohttp.Client) *Shell {
+func NewShellWithClient(privateKey, userAddress, url string, c *gohttp.Client) *Shell {
+	var sh Shell
+	sh.privateKey = privateKey
+	sh.userAddress = userAddress
 	if a, err := ma.NewMultiaddr(url); err == nil {
 		_, host, err := manet.DialArgs(a)
 		if err == nil {
 			url = host
 		}
 	}
-	var sh Shell
 	sh.url = url
 	sh.httpcli = *c
 	// We don't support redirects.
@@ -55,4 +59,3 @@ func (s *Shell) Request(command string, args ...string) *RequestBuilder {
 		shell:   s,
 	}
 }
-

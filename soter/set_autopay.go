@@ -17,7 +17,7 @@ type AutopayPayload struct {
 	Signature   string         `json:"signature"`
 }
 
-func GetAutopayPayload(enable bool, userAddress, privateKey string) (string, error) {
+func getAutopayPayload(enable bool, userAddress, privateKey string) (string, error) {
 	rawData := AutopayRawData{
 		Autopay:   enable,
 		Timestamp: utils.GetUnixTimeNow(),
@@ -38,12 +38,16 @@ func GetAutopayPayload(enable bool, userAddress, privateKey string) (string, err
 	return utils.GetStructRawString(payload)
 }
 
-func (s *Shell) Autopay(ctx context.Context, payload string) (SoterResponse, error) {
+func (s *Shell) Autopay(ctx context.Context, enable bool) (SoterResponse, error) {
+	payload, err := getAutopayPayload(enable, s.userAddress, s.privateKey)
+	if err != nil {
+		return SoterResponse{}, err
+	}
 	var out SoterResponse
 	rb := s.Request("autopay")
 	rb = rb.BodyString(payload)
 	rb = rb.Header("Content-Type", "application/json")
 	rb.SetMethod("POST")
-	err := rb.Exec(ctx, &out)
+	err = rb.Exec(ctx, &out)
 	return out, err
 }
