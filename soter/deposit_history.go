@@ -6,7 +6,7 @@ import (
 	"github.com/TRON-US/soter-sdk-go/utils"
 )
 
-type orderListRawData struct {
+type depositRawData struct {
 	StartDate int64 `json:"start_date"`
 	EndDate   int64 `json:"end_date"`
 	Offset    int32 `json:"offset"`
@@ -15,20 +15,20 @@ type orderListRawData struct {
 	Timestamp int64 `json:"timestamp"`
 }
 
-func getOrderListRawData(start, end int64, offset, limit int32) (string, error) {
-	rawData := orderListRawData{
+func getDepositRawData(start, end int64, offset, limit int32) (string, error) {
+	rawData := depositRawData{
 		StartDate: start,
 		EndDate: end,
 		Offset: offset,
 		Limit: limit,
-		Type: 1,
+		Type: 0,
 		Timestamp: utils.GetUnixTimeNow(),
 	}
 	return utils.GetStructRawString(rawData)
 }
 
-func (s *Shell) QueryOrderList(start, end int64, offset, limit int32) (SoterResponse, error) {
-	rawData, err := getOrderListRawData(start, end, offset, limit)
+func (s *Shell) QueryDepositHistory(start, end int64, offset, limit int32) (SoterResponse, error) {
+	rawData, err := getDepositRawData(start, end, offset, limit)
 	if err != nil {
 		return SoterResponse{}, err
 	}
