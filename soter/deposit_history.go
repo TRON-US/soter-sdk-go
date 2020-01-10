@@ -2,32 +2,33 @@ package soter
 
 import (
 	"context"
+
 	"github.com/TRON-US/soter-sdk-go/utils"
 )
 
-type fileListRawData struct {
+type depositRawData struct {
 	StartDate int64 `json:"start_date"`
 	EndDate   int64 `json:"end_date"`
 	Offset    int32 `json:"offset"`
 	Limit     int32 `json:"limit"`
-	IsDeleted bool  `json:"is_deleted"`
+	Type      int32 `json:"type"`
 	Timestamp int64 `json:"timestamp"`
 }
 
-func getFileListRawData(start, end int64, offset, limit int32, deleted bool) (string, error) {
-	rawData := fileListRawData{
+func getDepositRawData(start, end int64, offset, limit int32) (string, error) {
+	rawData := depositRawData{
 		StartDate: start,
 		EndDate: end,
 		Offset: offset,
 		Limit: limit,
-		IsDeleted: deleted,
+		Type: 0,
 		Timestamp: utils.GetUnixTimeNow(),
 	}
 	return utils.GetStructRawString(rawData)
 }
 
-func (s *Shell) QueryFileList(start, end int64, offset, limit int32, deleted bool) (SoterResponse, error) {
-	rawData, err := getFileListRawData(start, end, offset, limit, deleted)
+func (s *Shell) QueryDepositHistory(start, end int64, offset, limit int32) (SoterResponse, error) {
+	rawData, err := getDepositRawData(start, end, offset, limit)
 	if err != nil {
 		return SoterResponse{}, err
 	}
@@ -42,7 +43,7 @@ func (s *Shell) QueryFileList(start, end int64, offset, limit int32, deleted boo
 	}
 
 	var out SoterResponse
-	rb := s.Request("files")
+	rb := s.Request("history")
 	for _, option := range options {
 		option(rb)
 	}

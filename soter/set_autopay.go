@@ -3,22 +3,22 @@ package soter
 import (
 	"context"
 
-	"github.com/TRON-US/soter-sdk-golang/utils"
+	"github.com/TRON-US/soter-sdk-go/utils"
 )
 
-type AutopayRawData struct {
+type autopayRawData struct {
 	Autopay   bool  `json:"autopay"`
 	Timestamp int64 `json:"timestamp"`
 }
 
-type AutopayPayload struct {
+type autopayPayload struct {
 	UserAddress string         `json:"user_address"`
-	RawData     AutopayRawData `json:"raw_data"`
+	RawData     autopayRawData `json:"raw_data"`
 	Signature   string         `json:"signature"`
 }
 
 func getAutopayPayload(enable bool, userAddress, privateKey string) (string, error) {
-	rawData := AutopayRawData{
+	rawData := autopayRawData{
 		Autopay:   enable,
 		Timestamp: utils.GetUnixTimeNow(),
 	}
@@ -30,7 +30,7 @@ func getAutopayPayload(enable bool, userAddress, privateKey string) (string, err
 	if err != nil {
 		return "", nil
 	}
-	payload := AutopayPayload{
+	payload := autopayPayload{
 		UserAddress: userAddress,
 		RawData:     rawData,
 		Signature:   signature,

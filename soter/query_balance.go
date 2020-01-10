@@ -2,7 +2,8 @@ package soter
 
 import (
 	"context"
-	"github.com/TRON-US/soter-sdk-golang/utils"
+
+	"github.com/TRON-US/soter-sdk-go/utils"
 )
 
 type balanceRawData struct {
