@@ -1,4 +1,4 @@
-module github.com/TRON-US/soter-sdk-golang
+module github.com/TRON-US/soter-sdk-go
 
 require (
 	github.com/TRON-US/chaos v1.0.0

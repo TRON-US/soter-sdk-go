@@ -7,7 +7,7 @@ import (
 	"mime/multipart"
 	"os"
 
-	"github.com/TRON-US/soter-sdk-golang/utils"
+	"github.com/TRON-US/soter-sdk-go/utils"
 
 	"github.com/satori/go.uuid"
 )
@@ -19,7 +19,7 @@ type AddFileRawData struct {
 	Timestamp int64 `json:"timestamp"`
 }
 
-func (s *Shell) AddFile(requestUser, signedUser, privateKey, filePath string) (SoterResponse, error) {
+func (s *Shell) AddFile(requestUser, filePath string) (SoterResponse, error) {
 	var out SoterResponse
 	rb := s.Request("add")
 	rb.SetMethod("POST")
@@ -27,7 +27,7 @@ func (s *Shell) AddFile(requestUser, signedUser, privateKey, filePath string) (S
 	// prepare add file raw data
 	rawData := AddFileRawData{
 		RequestUser: requestUser,
-		SignedUser: signedUser,
+		SignedUser: s.userAddress,
 		RequestId: uuid.NewV4().String(),
 		Timestamp: utils.GetUnixTimeNow(),
 	}
@@ -35,7 +35,7 @@ func (s *Shell) AddFile(requestUser, signedUser, privateKey, filePath string) (S
 	if err != nil {
 		return SoterResponse{}, err
 	}
-	signature, err := utils.GetSignature(rawString, privateKey)
+	signature, err := utils.GetSignature(rawString, s.privateKey)
 	if err != nil {
 		return SoterResponse{}, nil
 	}
