@@ -1,7 +1,5 @@
 package soter
 
-// package shell implements a remote API interface for a running ipfs daemon
-
 import (
 	"crypto/tls"
 	"fmt"
