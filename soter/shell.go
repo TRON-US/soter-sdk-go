@@ -3,6 +3,7 @@ package soter
 // package shell implements a remote API interface for a running ipfs daemon
 
 import (
+	"crypto/tls"
 	"fmt"
 	gohttp "net/http"
 	"time"
@@ -23,6 +24,7 @@ func NewShell(privateKey, userAddress, url string) *Shell {
 		Transport: &gohttp.Transport{
 			Proxy:             gohttp.ProxyFromEnvironment,
 			DisableKeepAlives: true,
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		},
 	}
 
