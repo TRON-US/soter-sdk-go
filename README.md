@@ -9,6 +9,7 @@ go get -u github.com/TRON-US/soter-sdk-go
 Soter provides a list of HTTP endpoints/services for users to store files in BTFS, but it could be
 kind of complex if a user is not familiar with Soter. This soter-sdk-go provides users with a handy 
 way to interact with Soter.
+
 ### Example
 #### Add a file
 Add a file named as "hello.txt"
@@ -80,3 +81,6 @@ An example about how to query order details can be checked
 #### Query user profile
 An example about how to query user profile can be checked 
 [here](https://github.com/TRON-US/soter-sdk-go/blob/master/soter/query_profile_test.go).
+
+## License
+MIT
